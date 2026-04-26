@@ -13,9 +13,6 @@ const Navbar = () => {
       <li>
         <Link to={"/contact-ls"}>Contact</Link>
       </li>
-      <li>
-        <Link to={""}>adfkl</Link>
-      </li>
     </>
   );
   return (
@@ -47,7 +44,9 @@ const Navbar = () => {
               {links}
             </ul>
           </div>
-          <a className="btn btn-ghost text-xl">daisyUI</a>
+          <Link to={"/"} className="text-xl font-semibold italic">
+            Learners Care
+          </Link>
         </div>
         <div className="navbar-center hidden lg:flex">
           <ul className="menu menu-horizontal px-1">{links}</ul>

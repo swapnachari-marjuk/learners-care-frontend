@@ -1,4 +1,30 @@
 @import "tailwindcss";
-@plugin "daisyui"{
-  themes: light --default;
- }
+@plugin "daisyui";
+
+@plugin "daisyui/theme" {
+  name: "learnersCare";
+  default: true; 
+
+  /* Primary */
+  --color-primary: #1A73E8;
+  --color-primary-content: #ffffff;
+
+  /* Secondary: progress এবং success (green) */
+  --color-secondary: #34A853;
+  --color-secondary-content: #ffffff;
+
+  /* Accent: highlight এবং notice (yellow) */
+  --color-accent: #FBBC05;
+  --color-accent-content: #202124;
+
+  /* Base/Background: site body এবং card color */
+  --color-base-100: #F8F9FA; /* main bg */
+  --color-base-200: #E9ECEF; /* input field */
+  --color-base-300: #D8DBE0; /* border */
+  --color-base-content: #202124; /* main text */
+
+  /* Neutral: dark element */
+  --color-neutral: #202124;
+  --color-neutral-content: #ffffff;
+
+}
