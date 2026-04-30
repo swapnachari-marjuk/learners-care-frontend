@@ -20,7 +20,7 @@ interface authProps {
 
 const AuthProvider = ({ children }: authProps) => {
   const [user, setUser] = useState<User | null>(null);
-  const [loading, setLoading] = useState<boolean>(false);
+  const [loading, setLoading] = useState<boolean>(true);
 
   const createUser = (email: string, password: string) => {
     setLoading(true);
@@ -66,9 +66,7 @@ const AuthProvider = ({ children }: authProps) => {
     signOutUser,
     googleLogin,
   };
-  return (
-    <AuthContext value={authInfo}>{children}</AuthContext>
-  );
+  return <AuthContext value={authInfo}>{children}</AuthContext>;
 };
 
 export default AuthProvider;

@@ -20,13 +20,14 @@ const Navbar = () => {
 
   const { user, loading, signOutUser } = useAuth();
 
-  const handleSignOut = () => {
-    signOutUser()
-      .then(() => toast.warn("User logged out!"))
-      .catch((error) => {
-        console.log(error);
-        toast.error("something went wrong!");
-      });
+  const handleSignOut = async () => {
+    try {
+      await signOutUser();
+      toast.warn("User logged out!");
+    } catch (error) {
+      console.log(error);
+      toast.error("something went wrong!");
+    }
   };
 
   return (
@@ -67,7 +68,7 @@ const Navbar = () => {
         </div>
         <div className="navbar-end">
           {loading ? (
-            <span className="loading loading-ring loading-xl"></span>
+            <span className="loading loading-ring loading-md"></span>
           ) : user ? (
             <button onClick={handleSignOut} className="btn bg-red-600">
               Logout

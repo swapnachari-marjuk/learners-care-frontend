@@ -1,8 +1,8 @@
 import { useForm, type SubmitHandler } from "react-hook-form";
-import { FcGoogle } from "react-icons/fc";
 import { Link } from "react-router";
 import useAuth from "../../../hooks/AuthHook/useAuth";
 import { toast } from "react-toastify";
+import GSignin from "../../../components/GoogleSignin/GSignin";
 interface FormInput {
   name: string;
   email: string;
@@ -16,7 +16,7 @@ const Signup = () => {
   console.log(user);
   const handleSignin: SubmitHandler<FormInput> = async (data) => {
     try {
-      const result = await createUser(data.email, data.password);
+      await createUser(data.email, data.password);
       toast.success("User signed in successfully.");
     } catch (error) {
       console.error(error);
@@ -128,11 +128,7 @@ const Signup = () => {
           {/* Divider with Muted Text */}
           <div className="divider text-base-content/40 text-sm">OR</div>
 
-          {/* Social Login: Neutral style */}
-          <button className="btn hover:btn-neutral w-full flex items-center gap-2 font-medium">
-            <FcGoogle size={22} />
-            Continue with Google
-          </button>
+          <GSignin />
 
           {/* Footer: Uses Secondary color (#34A853) for the Call to Action */}
           <p className="text-center mt-4 text-base-content/80 text-sm">
