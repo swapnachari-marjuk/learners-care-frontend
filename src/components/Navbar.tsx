@@ -1,5 +1,7 @@
 import React from "react";
 import { Link } from "react-router";
+import useAuth from "../hooks/AuthHook/useAuth";
+import { toast } from "react-toastify";
 
 const Navbar = () => {
   const links: React.JSX.Element = (
@@ -15,6 +17,18 @@ const Navbar = () => {
       </li>
     </>
   );
+
+  const { user, loading, signOutUser } = useAuth();
+
+  const handleSignOut = () => {
+    signOutUser()
+      .then(() => toast.warn("User logged out!"))
+      .catch((error) => {
+        console.log(error);
+        toast.error("something went wrong!");
+      });
+  };
+
   return (
     <div>
       <div className="navbar bg-base-100 shadow-sm">
@@ -52,7 +66,22 @@ const Navbar = () => {
           <ul className="menu menu-horizontal px-1">{links}</ul>
         </div>
         <div className="navbar-end">
-          <Link to={"/login"}>Login</Link>
+          {loading ? (
+            <span className="loading loading-ring loading-xl"></span>
+          ) : user ? (
+            <button onClick={handleSignOut} className="btn bg-red-600">
+              Logout
+            </button>
+          ) : (
+            <>
+              <Link className="btn btn-ghost" to={"/login"}>
+                Login
+              </Link>
+              <Link className="btn btn-primary" to={"/signup"}>
+                Signup
+              </Link>
+            </>
+          )}
         </div>
       </div>
     </div>

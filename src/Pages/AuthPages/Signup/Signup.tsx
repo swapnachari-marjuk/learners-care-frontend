@@ -1,8 +1,29 @@
-import React from "react";
+import { useForm, type SubmitHandler } from "react-hook-form";
 import { FcGoogle } from "react-icons/fc";
 import { Link } from "react-router";
+import useAuth from "../../../hooks/AuthHook/useAuth";
+import { toast } from "react-toastify";
+interface FormInput {
+  name: string;
+  email: string;
+  photo: FileList;
+  password: string;
+}
 
 const Signup = () => {
+  const { createUser, user } = useAuth();
+  const { register, handleSubmit } = useForm<FormInput>();
+  console.log(user);
+  const handleSignin: SubmitHandler<FormInput> = async (data) => {
+    try {
+      const result = await createUser(data.email, data.password);
+      toast.success("User signed in successfully.");
+    } catch (error) {
+      console.error(error);
+      toast.error("something went wrong.");
+    }
+  };
+
   return (
     <div className="min-h-screen bg-base-100 flex items-center justify-center p-4">
       {/* Card Container: Using bg-white to pop against base-100 background */}
@@ -21,7 +42,7 @@ const Signup = () => {
             </p>
           </div>
 
-          <form onSubmit={(e) => e.preventDefault()}>
+          <form onSubmit={handleSubmit(handleSignin)}>
             {/* Full Name Input - নতুন যোগ করা হয়েছে */}
             <div className="form-control w-full">
               <label className="label">
@@ -30,6 +51,7 @@ const Signup = () => {
                 </span>
               </label>
               <input
+                {...register("name")}
                 type="text"
                 placeholder="John Doe"
                 className="input input-bordered w-full focus:input-primary transition-all"
@@ -46,6 +68,7 @@ const Signup = () => {
                 </span>
               </label>
               <input
+                {...register("email")}
                 type="email"
                 placeholder="name@example.com"
                 className="input input-bordered w-full focus:input-primary transition-all"
@@ -54,15 +77,18 @@ const Signup = () => {
               {/* focus:input-primary: Highlights border with your #1A73E8 on click */}
             </div>
 
+            {/* profile photo */}
             <div className="form-control w-full mt-3">
               <label className="label">
-                <span className="label-text font-semibold text-base-content">Profile Photo</span>
+                <span className="label-text font-semibold text-base-content">
+                  Profile Photo
+                </span>
               </label>
-              <input 
-                type="file" 
-                className="file-input file-input-bordered file-input-primary w-full bg-base-100" 
+              <input
+                {...register("photo")}
+                type="file"
+                className="file-input file-input-bordered file-input-primary w-full bg-base-100"
                 accept="image/*"
-                required
               />
               {/* file-input-primary: ফাইল সিলেক্ট করার বাটনটি তোমার দেওয়া নীল (#1A73E8) রঙে দেখাবে */}
             </div>
@@ -75,6 +101,7 @@ const Signup = () => {
                 </span>
               </label>
               <input
+                {...register("password")}
                 type="password"
                 placeholder="••••••••"
                 className="input input-bordered w-full focus:input-primary transition-all"
@@ -90,10 +117,10 @@ const Signup = () => {
               </label>
             </div>
 
-            {/* Login Button: Uses your primary brand color */}
+            {/* sign in Button: Uses your primary brand color */}
             <div className="form-control mt-4">
               <button className="btn btn-primary w-full text-white text-lg font-bold">
-                Login
+                Signin
               </button>
             </div>
           </form>
